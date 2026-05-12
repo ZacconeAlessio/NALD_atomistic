@@ -1,0 +1,84 @@
+# sample the affine-modulus
+
+variable	temp equal 300
+
+variable        delta equal  1e-5
+
+units           real
+dimension       3
+boundary        p       p       p
+atom_style      full
+
+bond_style      harmonic
+angle_style     harmonic
+dihedral_style  harmonic
+
+pair_style      lj/cut/coul/long 9.0
+pair_modify     mix arithmetic
+pair_modify     tail yes
+kspace_style    pppm 1e-5
+
+special_bonds   amber
+
+read_data		data.rst.${temp}
+
+timestep        1.0
+
+thermo_style    custom step temp press etotal pe ke epair emol evdwl ecoul elong ebond eangle edihed vol pxy pxz pyz
+thermo          1
+thermo_modify  flush yes
+
+run				0
+
+change_box      all triclinic
+kspace_style    pppm 1e-5
+
+#----------------------------------------
+variable        pxy equal -pxy
+variable        pxy0 equal ${pxy}
+variable        ly  equal ly
+variable        ly0 equal ${ly}
+variable        Gxy equal (v_pxy-${pxy0})/(${delta})
+
+variable        dxy equal ${delta}*${ly0}
+change_box      all xy delta ${dxy} remap units box
+
+run             0
+print           "${Gxy}" file GA.data screen no
+
+change_box      all xy delta -${dxy} remap units box
+run             0
+
+#----------------------------------------
+variable        pxz equal -pxz
+variable        pxz0 equal ${pxz}
+variable        lz  equal lz
+variable        lz0 equal ${lz}
+variable        Gxz equal (v_pxz-${pxz0})/(${delta})
+
+variable        dxz equal ${delta}*${lz0}
+change_box      all xz delta ${dxz} remap units box
+
+run             0
+print           "${Gxz}" append GA.data screen no
+
+change_box      all xz delta -${dxz} remap units box
+run             0
+
+#----------------------------------------
+variable        pyz equal -pyz
+variable        pyz0 equal ${pyz}
+variable        lz  equal lz
+variable        lz0 equal ${lz}
+variable        Gyz equal (v_pyz-${pyz0})/(${delta})
+
+variable        dyz equal ${delta}*${lz0}
+change_box      all yz delta ${dyz} remap units box
+
+run             0
+print           "${Gyz}" append GA.data screen no
+
+change_box      all yz delta -${dyz} remap units box
+run             0
+
+variable		delta delete

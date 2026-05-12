@@ -1,0 +1,63 @@
+# sample the affine force
+
+variable		temp equal 300
+variable        delta equal  1e-5
+
+units           real
+dimension       3
+boundary        p       p       p
+atom_style      full
+
+bond_style      harmonic
+angle_style     harmonic
+dihedral_style  harmonic
+
+pair_style      lj/cut/coul/long 9.0
+pair_modify     mix arithmetic
+pair_modify     tail yes
+kspace_style    pppm 1e-5
+
+special_bonds   amber
+
+read_data       data.rst.${temp}
+
+timestep        1.0
+
+thermo_style    custom step temp press etotal pe ke epair emol evdwl ecoul elong ebond eangle edihed vol pxy pxz pyz
+thermo          1
+thermo_modify  flush yes
+
+# Sample current volume
+variable        volume equal vol
+print 			"${volume}" file volume.data screen no
+
+run		0
+
+change_box      all triclinic
+kspace_style    pppm 1e-5
+
+####################################################################
+# Affine force calculation: sample force in undeformed state
+change_box      all xz delta 0.0  remap units box
+run             0
+fix             prevState all store/state 0 fx fy fz
+
+# Affine force calculation: sample force in deformed state
+variable        ddXZ  equal ${delta}*lz
+change_box      all xz delta ${ddXZ}  remap units box
+run             0
+fix             currState all store/state 0 fx fy fz
+
+# Affine force calculation: difference in force
+variable        affineForceX atom (f_prevState[1]-f_currState[1])/${delta}
+variable        affineForceY atom (f_prevState[2]-f_currState[2])/${delta}
+variable        affineForceZ atom (f_prevState[3]-f_currState[3])/${delta}
+write_dump      all custom AF.data mass v_affineForceX v_affineForceY v_affineForceZ modify sort id format line "%.15g %.15g %.15g %.15g"
+unfix           currState
+unfix           prevState
+
+# Reverse the deformation
+change_box      all xz delta -${ddXZ}  remap units box
+run             0 pre yes post no
+
+variable        delta delete
