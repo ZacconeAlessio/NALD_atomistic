@@ -1,10 +1,10 @@
 import numpy as np
 from numpy import linalg as LA
 
-N = 5000
+N = 9920
 dim = 3 * N
 
-for p in range(1, 3):   # run0 to run9
+for p in range(1, 3):   # run0 to run2
 
     print(f"Processing run {p}")
 
@@ -15,7 +15,7 @@ for p in range(1, 3):   # run0 to run9
     row = 0
 
     # ---- Read Hessian ----
-    with open(f'./run{p}/Hessian_T0.5.dat', 'r') as f:
+    with open(f'./run{p}/Hessian_T300.dat', 'r') as f:
         for line in f:
             hessian[row, shf*3:(shf+1)*3] = np.fromstring(line, sep=' ')
             count += 1
@@ -39,7 +39,7 @@ for p in range(1, 3):   # run0 to run9
 
     # ---- Read AF ----
     AF = np.zeros(dim)
-    dataAF = np.genfromtxt(f'./run{p}/AF_T0.5.dat',
+    dataAF = np.genfromtxt(f'./run{p}/AF_T300.dat',
                            skip_header=9, usecols=(1,2,3))
 
     for i in range(N):
@@ -53,8 +53,8 @@ for p in range(1, 3):   # run0 to run9
     gamma = np.dot(eigenvectors.T, AF)**2
 
     # ---- Save individual files ----
-    np.savetxt(f'./run{p}/eigenvalues_T0.5.data', eigenvalues)
-    np.savetxt(f'./run{p}/gamma_T0.5.data', gamma)
+    np.savetxt(f'./run{p}/eigenvalues_T300.data', eigenvalues)
+    np.savetxt(f'./run{p}/gamma_T300.data', gamma)
 
     # ---- Save combined file (Eigen_gamm) ----
     combined = np.column_stack((eigenvalues, gamma))
