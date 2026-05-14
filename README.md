@@ -20,8 +20,8 @@ The methodology combines:
 
 to compute:
 
-- storage modulus \(G'(\omega)\)
-- loss modulus \(G''(\omega)\)
+- storage modulus $G'(\omega)$
+- loss modulus $G''(\omega)$
 - plateau elastic modulus
 - viscoelastic response over broad frequency ranges
 
@@ -73,7 +73,7 @@ Typical systems include:
 
 Construct the Hessian matrix from equilibrated instantaneous configurations.
 
-For a system containing \(N\) atoms, the Hessian matrix has dimensions:
+For a system containing $N$ atoms, the Hessian matrix has dimensions:
 
 ```math
 3N \times 3N
@@ -143,13 +143,13 @@ The NALD framework predicts the viscoelastic modulus from microscopic vibrationa
 - affine force correlators
 - non-affine particle dynamics
 
-The storage modulus \(G'(\Omega)\) typically exhibits:
+The storage modulus $G'(\Omega)$ typically exhibits:
 
 - resonant peaks associated with molecular vibrations
 - low-frequency plateau behavior
 - temperature dependence below the glass transition
 
-The loss modulus \(G''(\Omega)\) characterizes dissipative relaxation processes and viscous damping.
+The loss modulus $G''(\Omega)$ characterizes dissipative relaxation processes and viscous damping.
 
 ---
 
