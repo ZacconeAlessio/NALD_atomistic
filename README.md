@@ -1,4 +1,4 @@
-# NALD_atomistic_epoxy
+# NALD atomistic (epoxy example)
 
 Atomistic Non-Affine Lattice Dynamics (NALD) framework for computing viscoelastic moduli and mechanical response of cross-linked epoxy polymers and amorphous polymer systems.
 
@@ -44,7 +44,7 @@ The approach requires:
 
 - vibrational density of states (vDOS)
 - affine force-field correlator
-- friction kernel or damping parameter
+- friction kernel or damping parameter $\nu$
 
 Starting from equilibrated atomistic configurations, the Hessian matrix is constructed and diagonalized to obtain the vibrational modes and eigenvectors of the system. These quantities are then used within non-affine response theory to compute the complex viscoelastic modulus.
 
@@ -135,6 +135,32 @@ This enables direct time-scale bridging between atomistic simulations and experi
 
 ---
 
+## Friction Parameter
+
+The NALD framework includes a microscopic friction parameter $\nu$
+that controls viscous damping in the generalized Langevin equation.
+
+For the atomistic epoxy system, the value of $\nu$ is determined
+by matching the NALD prediction of the viscoelastic modulus with
+nonequilibrium molecular dynamics (MD) oscillatory shear calculations
+in the high-frequency regime.
+
+The high-frequency plateau and resonant peaks of the modulus are used
+to calibrate the damping parameter.
+
+Following the methodology of:
+
+V. Vaibhav, T. W. Sirk, and A. Zaccone,  
+*Time-Scale Bridging in Atomistic Simulations of Epoxy Polymer Mechanics Using Nonaffine Deformation Theory*,  
+*Macromolecules* (2024),  
+
+the friction parameter was estimated (for the particular epoxy polymer glass studied therein) as:
+
+```math
+\nu = 5.6 \times 10^{13} \ \mathrm{kg \ s^{-1}}
+
+---
+
 ## Viscoelastic Response
 
 The NALD framework predicts the viscoelastic modulus from microscopic vibrational information using:
@@ -142,6 +168,7 @@ The NALD framework predicts the viscoelastic modulus from microscopic vibrationa
 - Hessian eigenmodes
 - affine force correlators
 - non-affine particle dynamics
+- friction parameter $\nu$ estimated from matching with MD data in the high-frequency plateau
 
 The storage modulus $G'(\Omega)$ typically exhibits:
 
