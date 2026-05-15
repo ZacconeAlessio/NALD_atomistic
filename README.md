@@ -148,24 +148,18 @@ in the high-frequency regime.
 The high-frequency plateau and resonant peaks of the modulus are used
 to calibrate the damping parameter.
 
-Following the methodology of:
-
-V. Vaibhav, T. W. Sirk, and A. Zaccone,  
-*Time-Scale Bridging in Atomistic Simulations of Epoxy Polymer Mechanics Using Nonaffine Deformation Theory*,  
-*Macromolecules* (2024),  
-
-the friction parameter was estimated (for the particular epoxy polymer glass studied therein) as:
+Following the methodology of Vaibhav et al. [1], the friction parameter $\nu$ was estimated (for the particular epoxy polymer glass studied therein) as:
 
 ```math
 \nu = 5.6 \times 10^{13} \ \mathrm{kg \ s^{-1}}
 ```
 
 The precise value of the friction parameter depends on the
-atomistic model, force field, temperature, and simulation protocol.
+atomistic model, force field, temperature, and undeformed simulation protocol.
 
-In practice, \( \nu \) is calibrated by matching the NALD prediction
-of the viscoelastic modulus with nonequilibrium molecular dynamics
-oscillatory shear calculations in the high-frequency regime.
+In practice, $\nu$ is calibrated by matching the NALD calculation 
+of $G'$ with nonequilibrium MD
+oscillatory shear calculations in the high-frequency regime where nonequilibrium MD is trustworthy.
 
 ---
 
