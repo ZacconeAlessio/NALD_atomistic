@@ -371,8 +371,8 @@ containing
 
 where:
 
-- \(\mathbf{e}_i\) is the eigenvector of mode \(i\)
-- \(\mathbf{\Xi}\) is the affine force field
+- $\mathbf{e}_i$ is the eigenvector of mode $i$
+- $\mathbf{\Xi}$ is the affine force field
 
 #### Combined File
 
@@ -401,33 +401,20 @@ which are subsequently used for computing:
 - Multiple independent configurations are strongly recommended to improve statistical averaging.
 - The current implementation assumes a fixed atom count (`N = 9920`) and temperature (`T = 300 K`) in `diagonalization.py`; users should modify these values as required for their systems.
 - Due to long-range Coulomb interactions in atomistic epoxy models, the Hessian matrix is dense and diagonalization may require substantial memory resources and HPC facilities.
-````
 
 ---
 
-## Typical Input Files
+## Applications
 
-Depending on the workflow, the calculations may require:
+This framework can be applied to:
 
-- equilibrated atomistic configurations
-- Hessian matrices
-- affine force-field data
-- eigenvalue/eigenvector files
-- thermodynamic data
-- oscillatory shear simulation data
-
-Users may need to modify hard-coded parameters such as:
-
-- temperature
-- damping coefficient
-- deformation frequency range
-- directory structure
-- force-field parameters
-
-directly within the scripts.
-
----
-
+- cross-linked epoxy thermosets
+- polymer glasses
+- amorphous polymers
+- viscoelastic spectroscopy
+- atomistic polymer mechanics
+- temperature-dependent elastic response
+- time-scale bridging between MD and experiments
 ## Applications
 
 This framework can be applied to:
