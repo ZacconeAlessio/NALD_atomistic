@@ -273,7 +273,7 @@ The Hessian is a dense matrix of dimensions
 3N \times 3N
 ```
 
-where \(N\) is the number of atoms.
+where $N$ is the number of atoms.
 
 For the epoxy system studied in the associated publication:
 
@@ -390,8 +390,8 @@ which are subsequently used for computing:
 
 - vibrational density of states (vDOS)
 - affine force-field correlator
-- storage modulus \(G'(\omega)\)
-- loss modulus \(G''(\omega)\)
+- storage modulus $G'(\Omega)$
+- loss modulus $G''(\Omega)$
 
 ---
 
