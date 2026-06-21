@@ -233,7 +233,6 @@ The following software/packages are required:
 
 ---
 
-````markdown
 ## Input Data Format
 
 The NALD atomistic workflow requires atomistic configurations generated from molecular dynamics simulations together with the Hessian matrix and affine force-field data computed from the same configuration.
