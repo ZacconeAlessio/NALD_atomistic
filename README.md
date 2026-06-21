@@ -411,17 +411,9 @@ This framework can be applied to:
 - cross-linked epoxy thermosets
 - polymer glasses
 - amorphous polymers
-- viscoelastic spectroscopy
-- atomistic polymer mechanics
-- temperature-dependent elastic response
-- time-scale bridging between MD and experiments
-## Applications
-
-This framework can be applied to:
-
-- cross-linked epoxy thermosets
-- polymer glasses
-- amorphous polymers
+- crystalline materials at finite T/with defects
+- nanomaterials
+- MOFs
 - viscoelastic spectroscopy
 - atomistic polymer mechanics
 - temperature-dependent elastic response
