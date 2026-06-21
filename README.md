@@ -261,7 +261,7 @@ where each `runX` corresponds to an independent configuration or replica.
 Hessian_T300.dat
 ```
 
-The Hessian matrix is generated from an equilibrated atomistic configuration using the LAMMPS command:
+The Hessian matrix is generated from an equilibrated atomistic configuration using the LAMMPS command (check the input script in.hessian):
 
 ```lammps
 dynamical_matrix all eskm 1e-8 file hessian.data
