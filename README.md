@@ -1,6 +1,6 @@
 # NALD atomistic (epoxy example)
 
-Atomistic Non-Affine Lattice Dynamics (NALD) framework for computing viscoelastic moduli and mechanical response of cross-linked epoxy polymers and amorphous polymer systems. The methodology is general and can be applied to virtually any material (organic, inorganic) for which atomistic force-fields and simulations of the undeformed material are available. The case study of epoxy polymers is intended to be a fully worked-out case study to illustrate the method.
+Atomistic Non-Affine Lattice Dynamics (NALD) framework for computing viscoelastic moduli and mechanical response of amorphous polymer systems at realistic experimental time scales, with a demo on a cross-linked epoxy. The methodology is general and can be applied to virtually any material (organic, inorganic) for which atomistic force-fields and simulations of the undeformed material are available. The case study of epoxy polymers is intended to be a fully worked-out case study to illustrate the method.
 
 The methodology combines atomistic molecular dynamics simulations, Hessian matrix analysis, instantaneous normal mode (INM) analysis, affine force-field correlations, and non-affine response theory to predict viscoelastic properties across broad frequency and time scales.
 
