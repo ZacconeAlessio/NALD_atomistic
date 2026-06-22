@@ -20,8 +20,8 @@ The methodology combines:
 
 to compute:
 
-- storage modulus $G'(\omega)$
-- loss modulus $G''(\omega)$
+- storage modulus $G'(\Omega)$
+- loss modulus $G''(\Omega)$
 - plateau elastic modulus
 - viscoelastic response over broad frequency ranges
 
