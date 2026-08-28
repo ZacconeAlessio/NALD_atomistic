@@ -460,6 +460,13 @@ Italy
 
 ## License
 
-This code is provided for academic and research purposes only.
+This software is released under the **MIT License**.
 
-Users are free to use and modify the code with appropriate citation to the original publications.
+See the [LICENSE](LICENSE) file for the full license text.
+
+If you use this repository or the atomistic NALD methodology in scientific work, please cite the associated Macromolecules paper:
+
+> V. Vaibhav, T. W. Sirk, and A. Zaccone,  
+> **Time-Scale Bridging in Atomistic Simulations of Epoxy Polymer Mechanics Using Nonaffine Deformation Theory**,  
+> *Macromolecules* **57**, 10885–10893 (2024).  
+> DOI: https://doi.org/10.1021/acs.macromol.4c01360
