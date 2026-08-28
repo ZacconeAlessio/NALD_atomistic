@@ -1,0 +1,51 @@
+cff-version: 1.2.0
+
+message: "If you use this repository or the atomistic NALD methodology in research, please cite the Vaibhav-Sirk-Zaccone Macromolecules paper below."
+
+title: "NALD_atomistic"
+
+type: software
+
+authors:
+  - family-names: "Vaibhav"
+    given-names: "Vinay"
+  - family-names: "Sirk"
+    given-names: "Timothy W."
+  - family-names: "Zaccone"
+    given-names: "Alessio"
+
+abstract: "Atomistic Non-Affine Lattice Dynamics workflow for computing viscoelastic moduli and mechanical response from molecular simulations, Hessian analysis, instantaneous normal modes, and affine force-field correlations."
+
+license: MIT
+
+repository-code: "https://github.com/ZacconeAlessio/NALD_atomistic"
+
+keywords:
+  - nonaffine lattice dynamics
+  - NALD
+  - atomistic simulation
+  - viscoelasticity
+  - Hessian
+  - instantaneous normal modes
+  - affine force field
+  - polymer mechanics
+  - storage modulus
+  - loss modulus
+
+preferred-citation:
+  type: article
+  authors:
+    - family-names: "Vaibhav"
+      given-names: "Vinay"
+    - family-names: "Sirk"
+      given-names: "Timothy W."
+    - family-names: "Zaccone"
+      given-names: "Alessio"
+  title: "Time-Scale Bridging in Atomistic Simulations of Epoxy Polymer Mechanics Using Nonaffine Deformation Theory"
+  journal: "Macromolecules"
+  volume: "57"
+  issue: "23"
+  start: "10885"
+  end: "10893"
+  year: 2024
+  doi: "10.1021/acs.macromol.4c01360"
