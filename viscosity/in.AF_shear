@@ -1,0 +1,56 @@
+# NALD affine force field: shear (xz)
+# Xi_shear = - d f / d gamma_xz, evaluated by a central finite difference.
+# Keep the force field and undeformed configuration identical to the Hessian calculation.
+
+variable        temp equal 300
+variable        delta equal 1.0e-5
+
+units           real
+dimension       3
+boundary        p p p
+atom_style      full
+
+bond_style      harmonic
+angle_style     harmonic
+dihedral_style  harmonic
+pair_style      lj/cut/coul/long 9.0
+pair_modify     mix arithmetic
+pair_modify     tail yes
+kspace_style    pppm 1e-5
+special_bonds   amber
+
+read_data       data.rst.${temp}
+timestep        1.0
+run             0
+
+variable        volume equal vol
+print           "${volume}" file volume.data screen no
+
+change_box      all triclinic
+kspace_style    pppm 1e-5
+
+# Store undeformed box length and use +/- delta/2 so the derivative is centered.
+variable        lz0 equal lz
+variable        half equal 0.5*${delta}
+variable        dhalf equal ${half}*${lz0}
+
+change_box      all xz delta -${dhalf} remap units box
+run             0
+fix             minus all store/state 0 fx fy fz
+
+change_box      all xz delta ${delta}*${lz0} remap units box
+run             0
+fix             plus all store/state 0 fx fy fz
+
+# LAMMPS force f=-dU/dr. Xi=-df/dgamma, hence (f_minus-f_plus)/delta.
+variable        XiX atom (f_minus[1]-f_plus[1])/${delta}
+variable        XiY atom (f_minus[2]-f_plus[2])/${delta}
+variable        XiZ atom (f_minus[3]-f_plus[3])/${delta}
+write_dump      all custom AF_shear.data id v_XiX v_XiY v_XiZ modify sort id format line "%d %.15g %.15g %.15g"
+
+unfix           plus
+unfix           minus
+
+# Return exactly to the original box.
+change_box      all xz delta -${dhalf} remap units box
+run             0 pre yes post no
