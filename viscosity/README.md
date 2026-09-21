@@ -27,6 +27,10 @@ strain in each box direction.
   epoxy zero-frequency viscosity formula while exposing its soft-mode cutoff.
 - `finite_size_cutoff.py` -- evaluates the finite-size shear cutoff used in
   Singh et al., J. Chem. Phys. 162, 244504 (2025).
+- `kobayashi_reference.csv` -- published 2026 simple-liquid bulk/shear benchmark values.
+- `KOBAYASHI_BENCHMARK.md` -- benchmark protocol, limitations, and proposed NALD test.
+- `validate_kobayashi_reference.py` -- checks the published relation
+  `zeta=(K_inf-K_0) tau_zeta` against the transcribed benchmark table.
 - `test_viscosity_nald.py` -- small synthetic tests of the modal formulas.
 - `VALIDATION.md` -- numerical results of the epoxy reference check.
 
