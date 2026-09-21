@@ -1,7 +1,7 @@
 # NALD affine force field: isotropic volumetric deformation
-# Xi_bulk = - d f / d epsilon_v, epsilon_v = Delta V / V.
-# Central finite difference is used. For an isotropic linear scale factor s,
-# epsilon_v = s^3-1, so s_+ and s_- are chosen from the requested +/- epsilon_v/2.
+# Xi_bulk = - d f / d epsilon_v, where epsilon_v = Delta V / V.
+# A central finite difference is used. For isotropic linear scale s,
+# epsilon_v=s^3-1, so s+ and s- correspond exactly to +/- deltaV/2.
 
 variable        temp equal 300
 variable        deltaV equal 1.0e-5
@@ -42,11 +42,12 @@ change_box      all x scale ${ratio} y scale ${ratio} z scale ${ratio} remap uni
 run             0
 fix             plus all store/state 0 fx fy fz
 
-# Xi_K = -df/d epsilon_v.
+# Xi_K=-df/d epsilon_v.
 variable        XiX atom (f_minus[1]-f_plus[1])/${deltaV}
 variable        XiY atom (f_minus[2]-f_plus[2])/${deltaV}
 variable        XiZ atom (f_minus[3]-f_plus[3])/${deltaV}
-write_dump      all custom AF_bulk.data id v_XiX v_XiY v_XiZ modify sort id format line "%d %.15g %.15g %.15g"
+# Include atom ID and mass for mass-weighted normal-mode projection.
+write_dump      all custom AF_bulk.data id mass v_XiX v_XiY v_XiZ modify sort id format line "%d %.15g %.15g %.15g %.15g"
 
 unfix           plus
 unfix           minus
