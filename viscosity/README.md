@@ -23,6 +23,8 @@ strain in each box direction.
   viscosity for shear or bulk.
 - `validate_epoxy_reference.py` -- backward-compatibility check against the
   historical T=300 K epoxy `G_dp.f90` calculation.
+- `legacy_epoxy_zero_frequency.py` -- reproduces the separately supplied direct
+  epoxy zero-frequency viscosity formula while exposing its soft-mode cutoff.
 - `test_viscosity_nald.py` -- small synthetic tests of the modal formulas.
 - `VALIDATION.md` -- numerical results of the epoxy reference check.
 
@@ -125,4 +127,6 @@ Numerical translational/Goldstone modes can separately be removed with
 
 The historical epoxy data are intentionally not committed to this repository.
 `validate_epoxy_reference.py` can be run on a local copy of those files to check
-backward compatibility.
+backward compatibility. `legacy_epoxy_zero_frequency.py` additionally makes the
+cutoff sensitivity of the separately supplied direct-viscosity script explicit;
+see `VALIDATION.md`.
