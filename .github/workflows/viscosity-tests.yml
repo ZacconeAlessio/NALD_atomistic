@@ -23,3 +23,5 @@ jobs:
       - run: python -m pip install --upgrade pip numpy
       - run: python -m py_compile viscosity/*.py
       - run: python viscosity/test_viscosity_nald.py -v
+
+      - run: python viscosity/validate_kobayashi_reference.py
