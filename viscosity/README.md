@@ -25,6 +25,8 @@ strain in each box direction.
   historical T=300 K epoxy `G_dp.f90` calculation.
 - `legacy_epoxy_zero_frequency.py` -- reproduces the separately supplied direct
   epoxy zero-frequency viscosity formula while exposing its soft-mode cutoff.
+- `finite_size_cutoff.py` -- evaluates the finite-size shear cutoff used in
+  Singh et al., J. Chem. Phys. 162, 244504 (2025).
 - `test_viscosity_nald.py` -- small synthetic tests of the modal formulas.
 - `VALIDATION.md` -- numerical results of the epoxy reference check.
 
@@ -102,14 +104,22 @@ silently taken from the epoxy example.
 Negative instantaneous-normal-mode eigenvalues are retained. No empirical
 low-frequency cutoff is applied by default.
 
-A finite-size cutoff can nevertheless be physically required. In the 2025
-NALD polymer-melt viscosity work (J. Chem. Phys. 162, 244504), modes below a
-minimum frequency associated with the finite simulation box were discarded,
-with the shear estimate `omega_min = (2 pi/L) sqrt(G_s/rho)`. For this reason
-`viscosity_nald.py` exposes `--cutoff-frequency`; it does **not** decide that
-cutoff for the user. For a bulk/compressional channel a longitudinal finite-size
-criterion may be more appropriate and should be validated for the system at
-hand rather than copied from shear.
+A finite-size cutoff can nevertheless be physically required. Singh et al.,
+J. Chem. Phys. 162, 244504 (2025), explicitly discard modes below the minimum
+shear-wave frequency supported by the finite box,
+`omega_min = (2 pi/L) sqrt(G_s/rho)`, where `L` is the box size, `rho` the mass
+density, and `G_s` the zero-frequency shear modulus. The same paper evaluates
+`G_s = G_inf - (V/k_B T)(<sigma_xy^2>-<sigma_xy>^2)`.
+
+`finite_size_cutoff.py` evaluates this prescription and `viscosity_nald.py`
+accepts the resulting value through `--cutoff-frequency`. Thus the cutoff is a
+physical finite-size input, not a hidden numerical constant.
+
+The 2025 paper gives this prescription for the **shear** channel only. It does
+not specify the corresponding bulk/longitudinal cutoff. We therefore do not
+hard-code a bulk analogue: that choice remains part of the bulk-viscosity
+validation and should be checked against longitudinal response / system-size
+scaling rather than copied from shear.
 
 Numerical translational/Goldstone modes can separately be removed with
 `--zero-tol`.
