@@ -32,11 +32,13 @@ historical zero-frequency shear viscosity: 0.033905666086 Pa s
 PASS: historical epoxy loss-modulus curve reproduced.
 ```
 
-This establishes backward numerical compatibility, but the historical cutoff and
-raw-force projection are **not** automatically carried into the new shear/bulk
-workflow. The new implementation keeps INMs, makes any finite-size cutoff
-explicit, and uses mass-weighted affine forces with the mass-normalized LAMMPS
-dynamical matrix.
+This establishes backward numerical compatibility, but the historical numerical
+value of the cutoff and the raw-force projection are **not** automatically
+carried into the new shear/bulk workflow. The 2025 JCP viscosity paper provides
+a physical finite-size prescription for the shear cutoff,
+`omega_min=(2 pi/L)sqrt(G_s/rho)`. The new implementation keeps INMs, makes the
+finite-size cutoff explicit, and uses mass-weighted affine forces with the
+mass-normalized LAMMPS dynamical matrix.
 
 The factor `2.906e6` in the old Fortran can also be identified: to numerical
 precision it is the SI conversion `(1 kcal mol^-1 A^-1)^2 / (1 amu)`. The new
@@ -74,3 +76,27 @@ loop/path accidents and exposes the cutoff explicitly.
 For new shear or bulk calculations the finite-size low-frequency treatment
 should therefore be stated as part of the physical model and tested for
 convergence, rather than inherited from either legacy script.
+
+
+## Relation to Singh et al., JCP 2025
+
+The published 2025 polymer-melt viscosity paper makes three points directly
+relevant to interpreting the legacy epoxy scripts:
+
+1. the dynamical matrix is mass normalized,
+   `H_ij = Phi_ij/sqrt(m_i m_j)`;
+2. both real and imaginary instantaneous-normal modes contribute to viscosity;
+3. the modes removed at the low-frequency end are justified as a **finite-size
+   propagating-mode cutoff**, with
+   `omega_min = (2 pi/L) sqrt(G_s/rho)`.
+
+The article itself contains no Supplementary Material section or supplementary
+file reference, and its Data Availability statement says that the supporting
+data are available from the corresponding author upon reasonable request.
+Accordingly, the repository records the cutoff formula from the published
+article but does not claim a supplementary dataset that has not been located.
+
+For the bulk channel, the article does not provide a corresponding
+bulk/longitudinal finite-size prescription.  That part therefore remains an
+explicit validation question rather than an assumed extension of the shear
+formula.
