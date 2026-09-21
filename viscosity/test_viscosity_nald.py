@@ -8,6 +8,7 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import viscosity_nald as vn
 import diagonalize_channels as dc
+import finite_size_cutoff as fsc
 
 
 class TestNALDViscosity(unittest.TestCase):
@@ -69,6 +70,10 @@ class TestNALDViscosity(unittest.TestCase):
             )
             h = dc.read_hessian(path, natoms=1)
             np.testing.assert_allclose(h, np.diag([1.0, 2.0, 3.0]))
+
+    def test_jcp_shear_cutoff_formula(self):
+        # L=2*pi, rho=4, G=9 -> omega_min=1.5
+        self.assertAlmostEqual(fsc.shear_cutoff(2.0*np.pi, 4.0, 9.0), 1.5, places=14)
 
 
 if __name__ == "__main__":
