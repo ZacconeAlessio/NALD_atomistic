@@ -46,7 +46,9 @@ fix             plus all store/state 0 fx fy fz
 variable        XiX atom (f_minus[1]-f_plus[1])/${delta}
 variable        XiY atom (f_minus[2]-f_plus[2])/${delta}
 variable        XiZ atom (f_minus[3]-f_plus[3])/${delta}
-write_dump      all custom AF_shear.data id v_XiX v_XiY v_XiZ modify sort id format line "%d %.15g %.15g %.15g"
+# Include both atom ID and mass. The mass is required for projection onto the
+# eigenvectors of the mass-normalized LAMMPS dynamical matrix.
+write_dump      all custom AF_shear.data id mass v_XiX v_XiY v_XiZ modify sort id format line "%d %.15g %.15g %.15g %.15g"
 
 unfix           plus
 unfix           minus
