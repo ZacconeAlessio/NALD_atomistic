@@ -42,3 +42,35 @@ The factor `2.906e6` in the old Fortran can also be identified: to numerical
 precision it is the SI conversion `(1 kcal mol^-1 A^-1)^2 / (1 amu)`. The new
 code evaluates that conversion from physical constants rather than retaining a
 magic number.
+
+
+## Additional direct-viscosity script supplied with the epoxy data
+
+A second supplied script evaluates the zero-frequency expression directly rather
+than first constructing `G''(Omega)`. Its constants match the historical
+epoxy implementation (`N=10074`, `nu=5.0e13 s^-1`, `tu=1.0e12`,
+`conv_gamma=2.906e6`), but it uses a different soft-mode window:
+`|lambda| < 1.0` instead of the `|lambda| < 2.57` window in `G_dp.f90`.
+
+Using the same supplied T=300 K run1 data gives
+
+```text
+legacy direct formula, |lambda| < 1.0  : eta = 0.147762800487 Pa s
+legacy G_dp.f90 limit, |lambda| < 2.57 : eta = 0.033905666086 Pa s
+no finite cutoff (zero tolerance only) : eta ~= 7.44e3 Pa s
+```
+
+Thus the zero-frequency viscosity is extremely sensitive to the soft-mode
+prescription for this finite atomistic configuration.  The two historical
+cutoffs are not mathematically equivalent and there is no basis in these files
+alone for choosing one over the other.
+
+The supplied direct script also contains two mechanical issues as written:
+`range(1, 1)` executes zero iterations, and the file paths depend on `samp`
+rather than the loop variable `tej`.  The reference implementation
+`legacy_epoxy_zero_frequency.py` keeps the supplied algebra but removes those
+loop/path accidents and exposes the cutoff explicitly.
+
+For new shear or bulk calculations the finite-size low-frequency treatment
+should therefore be stated as part of the physical model and tested for
+convergence, rather than inherited from either legacy script.
