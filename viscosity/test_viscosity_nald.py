@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 import sys
 import unittest
+import tempfile
 from pathlib import Path
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import viscosity_nald as vn
+import diagonalize_channels as dc
 
 
 class TestNALDViscosity(unittest.TestCase):
@@ -40,6 +42,33 @@ class TestNALDViscosity(unittest.TestCase):
         np.testing.assert_allclose(kept_lam, [-9.0, 9.0])
         self.assertEqual(info["removed_zero"], 1)
         self.assertEqual(info["removed_cutoff"], 2)
+
+    def test_lammps_real_force_squared_per_amu_conversion(self):
+        self.assertAlmostEqual(vn.GAMMA_REAL_MW_TO_SI, 2906915.7802365357, places=8)
+
+    def test_affine_reader_sorts_atom_ids(self):
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "af.data"
+            path.write_text(
+                "2 16.0 4.0 5.0 6.0\n"
+                "1 12.0 1.0 2.0 3.0\n",
+                encoding="utf-8",
+            )
+            mass, xi = dc.read_affine(path, skip_header=0)
+            np.testing.assert_allclose(mass, [12.0, 16.0])
+            np.testing.assert_allclose(xi, [[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
+
+    def test_hessian_reader_accepts_trailing_blank_line(self):
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "hessian.data"
+            path.write_text(
+                "1 0 0\n"
+                "0 2 0\n"
+                "0 0 3\n\n",
+                encoding="utf-8",
+            )
+            h = dc.read_hessian(path, natoms=1)
+            np.testing.assert_allclose(h, np.diag([1.0, 2.0, 3.0]))
 
 
 if __name__ == "__main__":
