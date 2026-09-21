@@ -33,12 +33,13 @@ kspace_style    pppm 1e-5
 variable        lz0 equal lz
 variable        half equal 0.5*${delta}
 variable        dhalf equal ${half}*${lz0}
+variable        dfull equal ${delta}*${lz0}
 
 change_box      all xz delta -${dhalf} remap units box
 run             0
 fix             minus all store/state 0 fx fy fz
 
-change_box      all xz delta ${delta}*${lz0} remap units box
+change_box      all xz delta ${dfull} remap units box
 run             0
 fix             plus all store/state 0 fx fy fz
 
