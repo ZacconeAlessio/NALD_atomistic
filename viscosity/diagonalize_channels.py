@@ -69,9 +69,10 @@ def read_hessian(path: Path, natoms: int) -> np.ndarray:
                 vals[k:k+3] = block
                 k += 3
             h[row] = vals
-        extra = fh.readline()
-        if extra:
-            raise ValueError(f"{path}: contains extra lines after expected {dim*natoms} blocks")
+        if any(line.strip() for line in fh):
+            raise ValueError(
+                f"{path}: contains extra nonblank lines after expected {dim*natoms} blocks"
+            )
     return 0.5 * (h + h.T)
 
 
